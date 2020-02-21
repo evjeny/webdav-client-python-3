@@ -10,6 +10,7 @@ from re import sub
 
 import lxml.etree as etree
 import requests
+
 from dateutil import parser as dateutil_parser
 
 from webdav3.connection import *
@@ -214,7 +215,7 @@ class Client(object):
         response = self.session.request(
             method=self.requests[action],
             url=self.get_url(path),
-            auth=(self.webdav.login, self.webdav.password) if not self.webdav.token else None,
+            auth=requests.auth.HTTPDigestAuth(self.webdav.login, self.webdav.password) if not self.webdav.token else None,
             headers=self.get_headers(action, headers_ext),
             timeout=self.timeout,
             data=data,
